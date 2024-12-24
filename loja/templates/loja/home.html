@@ -1,0 +1,564 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ loja.nome }} - Loja</title>
+    <link rel="icon" type="image/png" href="{% static 'img/' %}{{ loja.favicon }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Definir cores dinâmicas */
+        :root {
+            --cor-principal: {{ loja.cor_principal }};
+            --cor-secundaria: {{ loja.cor_secundaria }};
+        }
+        /* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Fira Sans', sans-serif;
+  line-height: 1.6;
+  background: #fff;
+}
+
+/* Banner */
+.banner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1600px; /* Ajuste conforme necessário */
+  margin: auto;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.texto {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+/* Header */
+.styleHeader {
+  background: #fff;
+  border-bottom: 0px solid;
+}
+
+
+ .top-bar {
+            background: var(--cor-principal);
+            color: #fff;
+            padding: 11px 0;
+        }
+
+.contact-info {
+  justify-content: space-between; /* Espaça igualmente os itens */
+  align-items: center; /* Centraliza verticalmente os itens */
+  width: 100%;
+}
+
+.contact-info span {
+  margin-right: 190px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Products Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 40px 0;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.product-description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.product-price {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Produtos */
+.product-button {
+            background: var(--cor-principal);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+.product-button:hover {
+            background: darken(var(--cor-principal), 10%);
+        }
+
+/* Category Navigation */
+.category-nav {
+  background: #f8f8f8;
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+.category-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style: none;
+}
+
+.category-item {
+  padding: 8px 15px;
+  background: #a01414;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* Categoria selecionada com cor dinâmica */
+.category-item:hover,
+.category-item.active {
+  background: var(--cor-principal);
+  color: #fff;
+  border-color: var(--cor-principal);
+}
+
+/* Page Title */
+.page-title {
+  text-align: center;
+  padding: 40px 0;
+  background: #f8f8f8;
+}
+
+.page-title h1 {
+  color: #333;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.page-title p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Navegação */
+.navbar-menu-home {
+            background: #fff;
+            padding: 0px 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 10px;
+  margin: 0;
+}
+
+.nav-list a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+/* Link da navegação - cor dinâmica ao passar o mouse */
+.nav-list a:hover {
+            color: var(--cor-principal);
+        }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .category-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .page-title {
+    padding: 20px 0;
+  }
+
+  .page-title h1 {
+    font-size: 24px;
+  }
+}
+
+/* Footer */
+footer {
+            background: var(--cor-principal);
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+
+        
+
+footer .container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+footer div {
+  flex: 1;
+  min-width: 250px;
+  margin: 20px;
+}
+
+footer h3 {
+            color: var(--cor-secundaria);
+        }
+
+footer p {
+  font-size: 14px;
+}
+
+/* Customização das lojas */
+
+/* Renovagraf */
+.renovagraf {
+  --cor-principal: #e31e24; /* Renovagraf red */
+  --cor-secundaria: #f8f8f8; /* Background */
+}
+
+.renovagraf .top-bar {
+  background-color: var(--cor-principal);
+}
+
+.renovagraf .product-button {
+  background-color: var(--cor-principal);
+}
+
+.renovagraf footer {
+  background-color: var(--cor-principal);
+}
+
+/* Infinity */
+.infinity {
+  --cor-principal: #005eb8; /* Infinity blue */
+  --cor-secundaria: #f8f8f8; /* Background */
+}
+
+.infinity .top-bar {
+  background-color: var(--cor-principal);
+}
+
+.infinity .product-button {
+  background-color: var(--cor-principal);
+}
+
+.infinity footer {
+  background-color: var(--cor-principal);
+}
+
+/* Prime */
+.prime {
+  --cor-principal: #0c0c0ce8; /* PrimeGraph green */
+  --cor-secundaria: #f8f8f8; /* Background */
+}
+
+.prime .top-bar {
+  background-color: var(--cor-principal);
+}
+
+.prime .product-button {
+  background-color: var(--cor-principal);
+}
+
+.prime footer {
+  background-color: var(--cor-principal);
+}
+
+    </style>
+
+</head>
+<body>
+
+  </div>
+</div>
+</div>
+</div>
+<div class="styleHeader">
+  <!-- Barra de Contato -->
+  <div class="top-bar text-white py-2">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <!-- Endereço com ícone -->
+        <div class="d-flex align-items-center">
+            <img src="{% static 'img/localizacao_icon.png' %}" alt="Ícone de Localização" width="20" height="20" class="me-2">
+           
+            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome|lower }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
+        </div>
+
+        <!-- Telefone com ícone -->
+        <div class="d-flex align-items-center">
+            <img src="{% static 'img/telefone_icon.png' %}" alt="Ícone de Telefone" width="20" height="20" class="me-2">
+            <span>{{ loja.telefone }}</span>
+        </div>
+
+        <!-- Email com ícone -->
+        <div class="d-flex align-items-center">
+            <img src="{% static 'img/email_icon.png' %}" alt="Ícone de Email" width="20" height="20" class="me-2">
+            <span>{{ loja.email }}</span>
+        </div>          
+          <!-- Ícones das redes sociais -->
+          <div class="social-icons d-flex align-items-center ms-3">
+              <a href="{{ loja.facebook_url }}" target="_blank" class="me-3">
+                  <img src="{% static 'img/facebook_icon.png' %}" alt="Facebook" width="24" height="24">
+              </a>
+              <a href="{{ loja.instagram_url }}" target="_blank">
+                  <img src="{% static 'img/instagram_icon.png' %}" alt="Instagram" width="24" height="24">
+              </a>
+          </div>
+      </div>
+  </div>
+</div>
+
+        
+    
+        <!-- Logo e Menu de Navegação -->
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
+        <!-- Logo da Loja -->
+        <a href="{% url 'home_loja' loja=loja.nome|lower %}" class="navbar-brand">
+          <img src="{% static 'img/' %}{{ loja.logo }}" alt="Logo {{ loja.nome }}" width="220" height="60">
+      </a>
+      
+
+    
+                <!-- Navegação -->
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                      <ul class="navbar-nav ms-auto">
+                          <li class="nav-item">
+                              <a class="nav-link" href="/?loja={{ loja.nome|lower }}">Home</a>
+                          </li>
+                          <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
+                          <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
+                          <li class="nav-item"><a class="nav-link" href="/orcamento/?loja={{ loja.nome|lower }}">Orçamento</a></li>
+                          <li class="nav-item"><a class="nav-link" href="/contato/?loja={{ loja.nome|lower }}">Contato</a></li>
+                      </ul>
+                  </div>
+                </nav>
+            </header>
+        </div>
+    </div>
+        
+    <div class="banner">
+        <div class="slides">
+            <div class="slide active">
+                <img src="{% static 'img/produto1.png' %}" alt="Produto 1" width="100%" height="300">
+                <div class="texto">Nosso Produto 1</div>
+            </div>
+            <div class="slide">
+                <img src="{% static 'img/produto2.jpg' %}" alt="Produto 2" width="100%" height="300">
+                <div class="texto">Nosso Produto 2</div>
+            </div>
+            <div class="slide">
+                <img src="{% static 'img/produto3.png' %}" alt="Produto 3" width="100%" height="300">
+                <div class="texto">Nosso Produto 3</div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="products-grid">
+
+          <div class="product-card">
+            <img src="{% static 'img/livros.jpg' %}" alt="Livros" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Livros</h3>
+                <p class="product-description">Impressos em Papel Off-set 75 g/m² capa brochura</p>
+                <div class="product-price">A partir de R$ 89,90</div>                  
+                <button class="product-button">Confira Já</button>
+              </div>
+            </div>
+        
+          <!-- Cartão de Visita -->
+          <div class="product-card">
+            <img src="{% static 'img/cartao.png' %}" alt="Cartão de Visita" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Cartão de Visita</h3>
+              <p class="product-description">Impressão 4x4 cores em papel couchê 250g</p>
+              <div class="product-price">A partir de R$ 89,90</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+      
+          <!-- Flyers -->
+          <div class="product-card">
+            <img src="{% static 'img/flyer.jpg' %}" alt="Flyers" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Flyers</h3>
+              <p class="product-description">Impressão 4x4 cores em papel couché 115g</p>
+              <div class="product-price">A partir de R$ 99,00</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+      
+          <!-- Folders -->
+          <div class="product-card">
+            <img src="{% static 'img/folder.jpg' %}" alt="Folders" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Folders</h3>
+              <p class="product-description">Impressão 4x4 cores em papel couché 90g</p>
+              <div class="product-price">A partir de R$ 99,00</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+      
+          <!-- Banners -->
+          <div class="product-card">
+            <img src="{% static 'img/banner.png' %}" alt="Banners" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Banners</h3>
+              <p class="product-description">Impressão digital em lona 440g e bastão de madeira</p>
+              <div class="product-price">A partir de R$ 79,90/m²</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+      
+          <!-- Catálogos -->
+          <div class="product-card">
+            <img src="{% static 'img/catalogo.jpg' %}" alt="Catálogos" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Catálogos</h3>
+              <p class="product-description">Impressão 4x4 cores com acabamento</p>
+              <div class="product-price">A partir de R$ 29,00</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+      
+          <!-- Adesivos -->
+          <div class="product-card">
+            <img src="{% static 'img/adesivos.jpg' %}" alt="Adesivos" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Adesivos</h3>
+              <p class="product-description">Impressão digital em vinil adesivo com recorte automatico</p>
+              <div class="product-price">A partir de R$ 105,90/m²</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+
+          <!-- Wind Banner -->
+          <div class="product-card">
+            <img src="{% static 'img/windbanner.png' %}" alt="Flyers" class="product-image">
+            <div class="product-info">
+              <h3 class="product-title">Wind Banner</h3>
+              <p class="product-description">Impressão em tecido ambos os lados</p>
+              <div class="product-price">A partir de R$ 259,00</div>
+              <button class="product-button">Confira Já</button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    
+    <footer>
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px; margin: 20px;">
+                    <h3>{{ loja.nome }}</h3>
+                    <p>Rua Orfanato, 1205 - Vila Prudente <br> São Paulo - SP <br> CEP: 03131-010</p>
+                </div>
+                <div style="flex: 1; min-width: 250px; margin: 20px;">
+                    <h3>Contato</h3>
+                    <p>{{ loja.telefone }}<br>{{ loja.email }}</p>
+                </div>
+                <div style="flex: 1; min-width: 250px; margin: 20px;">
+                    <h3>Horário de Atendimento</h3>
+                    <p>Segunda a Sexta<br>08:00 às 18:00</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let index = 0;
+        function mostrarSlides() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, i) => {
+                slide.style.display = (i === index) ? 'block' : 'none';
+            });
+            index = (index + 1) % slides.length;
+        }
+        setInterval(mostrarSlides, 3000); 
+        mostrarSlides(); // Mostra a primeira imagem
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
