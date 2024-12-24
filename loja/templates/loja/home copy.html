@@ -355,7 +355,7 @@ footer p {
         <div class="d-flex align-items-center">
             <img src="{% static 'img/localizacao_icon.png' %}" alt="Ícone de Localização" width="20" height="20" class="me-2">
            
-            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
+            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome|lower }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
         </div>
 
         <!-- Telefone com ícone -->
@@ -402,7 +402,7 @@ footer p {
                     <div class="collapse navbar-collapse" id="navbarNav">
                       <ul class="navbar-nav ms-auto">
                           <li class="nav-item">
-                              <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
+                              <a class="nav-link" href="/?loja={{ loja.nome|lower }}">Home</a>
                           </li>
                           <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
                           <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
@@ -440,7 +440,7 @@ footer p {
             <div class="product-info">
                 <h3 class="product-title">Livros</h3>
                 <p class="product-description">Impressos em Papel Off-set 75 g/m² capa brochura</p>
-                            
+                <div class="product-price">A partir de R$ 89,90</div>                  
                 <button class="product-button">Confira Já</button>
               </div>
             </div>
@@ -451,7 +451,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Cartão de Visita</h3>
               <p class="product-description">Impressão 4x4 cores em papel couchê 250g</p>
-              
+              <div class="product-price">A partir de R$ 89,90</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -462,7 +462,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Flyers</h3>
               <p class="product-description">Impressão 4x4 cores em papel couché 115g</p>
-             
+              <div class="product-price">A partir de R$ 99,00</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -473,7 +473,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Folders</h3>
               <p class="product-description">Impressão 4x4 cores em papel couché 90g</p>
-              
+              <div class="product-price">A partir de R$ 99,00</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -484,7 +484,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Banners</h3>
               <p class="product-description">Impressão digital em lona 440g e bastão de madeira</p>
-              
+              <div class="product-price">A partir de R$ 79,90/m²</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -495,7 +495,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Catálogos</h3>
               <p class="product-description">Impressão 4x4 cores com acabamento</p>
-              
+              <div class="product-price">A partir de R$ 29,00</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -506,7 +506,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Adesivos</h3>
               <p class="product-description">Impressão digital em vinil adesivo com recorte automatico</p>
-              
+              <div class="product-price">A partir de R$ 105,90/m²</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>
@@ -517,7 +517,7 @@ footer p {
             <div class="product-info">
               <h3 class="product-title">Wind Banner</h3>
               <p class="product-description">Impressão em tecido ambos os lados</p>
-             
+              <div class="product-price">A partir de R$ 259,00</div>
               <button class="product-button">Confira Já</button>
             </div>
           </div>

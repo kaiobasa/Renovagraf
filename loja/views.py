@@ -47,7 +47,7 @@ def home(request, loja=None):
     loja_param = loja if loja else 'renovagraf'
 
     # Verifica se a loja selecionada existe, caso contrário, usa 'renovagraf'
-    loja_selecionada = lojas.get(loja_param.lower(), lojas['renovagraf'])
+    loja_selecionada = lojas.get(loja_param.lower(), )
 
     # Renderiza a página com as informações da loja selecionada
     return render(request, 'loja/home.html', {'loja': loja_selecionada})
