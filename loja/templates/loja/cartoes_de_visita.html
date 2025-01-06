@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Livros - {{ loja.nome }}
+{% endblock %}
+
+{% block content %}
+    <h1>Livros - {{ loja.nome }}</h1>
+    <p>Aqui você encontrará nossos livros. Confira abaixo as opções disponíveis:</p>
+    <!-- Conteúdo específico dos livros -->
+    <div class="produtos">
+        <div class="produto">
+            <h2>Livro Exemplo 1</h2>
+            <p>Descrição do livro 1.</p>
+        </div>
+        <div class="produto">
+            <h2>Livro Exemplo 2</h2>
+            <p>Descrição do livro 2.</p>
+        </div>
+        <!-- Mais produtos -->
+    </div>
+{% endblock %}

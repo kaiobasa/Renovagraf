@@ -15,11 +15,7 @@
 }
 
 /* Reset & Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 body {
     font-family: 'Fira Sans', sans-serif;
@@ -27,25 +23,7 @@ body {
     background: #fff;
 }
 
-/* Banner */
-.banner {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 1600px; /* Ajuste conforme necessário */
-    margin: auto;
-}
 
-.slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-    min-width: 100%;
-    box-sizing: border-box;
-    position: relative;
-}
 
 .texto {
     position: absolute;
@@ -68,21 +46,6 @@ body {
     padding: 11px 0;
 }
 
-
-/* Header */
-.header {
-    background: #fff;
-    width: 100%; /* Garantir que o header ocupe toda a largura da página */
-    border-bottom: 3px solid var(--cor-principal);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.header .container {
-    max-width: 1200px; /* Define a largura máxima do conteúdo dentro do header */
-    margin: 0 auto; /* Centraliza o conteúdo */
-    padding: 0 15px; /* Adiciona espaçamento */
-}
 .contact-info {
     justify-content: space-between; /* Espaça igualmente os itens */
     align-items: center; /* Centraliza verticalmente os itens */
@@ -353,7 +316,7 @@ footer p {
     background-color: var(--cor-principal);
 }
 
-    </style>
+</style>
 
 </head>
 <body>
@@ -370,7 +333,7 @@ footer p {
         <div class="d-flex align-items-center">
             <img src="{% static 'img/localizacao_icon.png' %}" alt="Ícone de Localização" width="20" height="20" class="me-2">
            
-            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
+            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome|lower }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
         </div>
 
         <!-- Telefone com ícone -->
@@ -397,7 +360,7 @@ footer p {
   </div>
 </div>
 
-        
+   
     
         <!-- Logo e Menu de Navegação -->
 <div class="container">
@@ -417,7 +380,7 @@ footer p {
                     <div class="collapse navbar-collapse" id="navbarNav">
                       <ul class="navbar-nav ms-auto">
                           <li class="nav-item">
-                              <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
+                            <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
                           </li>
                           <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
                           <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
@@ -426,113 +389,17 @@ footer p {
                       </ul>
                   </div>
                 </nav>
-            </header>
         </div>
     </div>
-    <header class="header"></header>
-    <div class="banner">
-        <div class="slides">
-            <div class="slide active">
-                <img src="{% static 'img/produto1.png' %}" alt="Produto 1" width="100%" height="300">
-                <div class="texto">Nosso Produto 1</div>
-            </div>
-            <div class="slide">
-                <img src="{% static 'img/produto2.jpg' %}" alt="Produto 2" width="100%" height="300">
-                <div class="texto">Nosso Produto 2</div>
-            </div>
-            <div class="slide">
-                <img src="{% static 'img/produto3.png' %}" alt="Produto 3" width="100%" height="300">
-                <div class="texto">Nosso Produto 3</div>
-            </div>
-        </div>
-    </div>
-    <header class="header"></header>
-    <main class="container">
-        <div class="products-grid">
 
-            <!-- Livros -->
-            <div class="product-card">
-                <img src="{% static 'img/livros.jpg' %}" alt="Livros" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Livros</h3>
-                    <p class="product-description">Impressos em Papel Off-set 75 g/m² capa brochura</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="livros">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Cartão de Visita -->
-            <div class="product-card">
-                <img src="{% static 'img/cartao.png' %}" alt="Cartão de Visita" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Cartão de Visita</h3>
-                    <p class="product-description">Impressão 4x4 cores em papel couchê 250g</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="cartoes-de-visita">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Flyers -->
-            <div class="product-card">
-                <img src="{% static 'img/flyer.jpg' %}" alt="Flyers" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Flyers</h3>
-                    <p class="product-description">Impressão 4x4 cores em papel couché 115g</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="flyers">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Folders -->
-            <div class="product-card">
-                <img src="{% static 'img/folder.jpg' %}" alt="Folders" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Folders</h3>
-                    <p class="product-description">Impressão 4x4 cores em papel couché 90g</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="folders">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Banners -->
-            <div class="product-card">
-                <img src="{% static 'img/banner.png' %}" alt="Banners" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Banners</h3>
-                    <p class="product-description">Impressão digital em lona 440g e bastão de madeira</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="banners">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Catálogos -->
-            <div class="product-card">
-                <img src="{% static 'img/catalogo.jpg' %}" alt="Catálogos" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Catálogos</h3>
-                    <p class="product-description">Impressão 4x4 cores com acabamento</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="catalogos">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Adesivos -->
-            <div class="product-card">
-                <img src="{% static 'img/adesivos.jpg' %}" alt="Adesivos" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Adesivos</h3>
-                    <p class="product-description">Impressão digital em vinil adesivo com recorte automático</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="adesivos">Confira Já</button>
-                </div>
-            </div>
-        
-            <!-- Wind Banner -->
-            <div class="product-card">
-                <img src="{% static 'img/windbanner.png' %}" alt="Wind Banner" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Wind Banner</h3>
-                    <p class="product-description">Impressão em tecido ambos os lados</p>
-                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="windbanner">Confira Já</button>
-                </div>
-            </div>
-        
-        </div>
-      </main>
-    
+    <!-- Conteúdo da página -->
+    <main class="container">
+        {% block content %}
+        <!-- O conteúdo da página será injetado aqui -->
+        {% endblock %}
+    </main>
+
+    <!-- Parte inferior (Footer) -->
     <footer>
         <div class="container">
             <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
@@ -552,38 +419,6 @@ footer p {
         </div>
     </footer>
 
-    <script>
-        let index = 0;
-        function mostrarSlides() {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach((slide, i) => {
-                slide.style.display = (i === index) ? 'block' : 'none';
-            });
-            index = (index + 1) % slides.length;
-        }
-        setInterval(mostrarSlides, 3000); 
-        mostrarSlides(); // Mostra a primeira imagem
-
-        document.addEventListener("DOMContentLoaded", function() {
-    // Obtenha todos os botões de "Confira Já"
-    const productButtons = document.querySelectorAll('.product-button');
-
-    // Para cada botão, adicione um evento de clique
-    productButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            // Obtenha os dados da loja e do produto do botão
-            const lojaName = button.getAttribute('data-loja');
-            const produtoName = button.getAttribute('data-produto');
-
-            // Crie a URL para o produto específico
-            const productUrl = `/loja/${lojaName}/${produtoName}/`;  // A URL agora é dinâmica
-
-            // Redirecione para a URL do produto
-            window.location.href = productUrl;
-        });
-    });
-});
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

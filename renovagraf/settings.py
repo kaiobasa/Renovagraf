@@ -56,12 +56,18 @@ ROOT_URLCONF = 'renovagraf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'renovagraf/loja/templates')],
-        'APP_DIRS': True,  # Isso permite buscar templates nas pastas das apps
+        'DIRS': [
+            BASE_DIR / 'templates',  # Esta linha permite que o Django busque templates na pasta 'templates' no diretório base
+        ],
+        'APP_DIRS': True,  # Permite buscar templates dentro das pastas das apps
         'OPTIONS': {
-            'context_processors': [
+            
+  
+'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                
+              
+'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -132,3 +138,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configurações de envio de e-mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtps.uhserver.com'  # Usando o Gmail como exemplo
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'desenvolvimento@renovagraf.com.br'  # Substitua pelo seu e-mail
+EMAIL_HOST_PASSWORD = 'Amapa244'  # Substitua pela sua senha ou senha de app do Gmail
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

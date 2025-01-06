@@ -68,6 +68,21 @@ body {
     padding: 11px 0;
 }
 
+
+/* Header */
+.header {
+    background: #fff;
+    width: 100%; /* Garantir que o header ocupe toda a largura da página */
+    border-bottom: 3px solid var(--cor-principal);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header .container {
+    max-width: 1200px; /* Define a largura máxima do conteúdo dentro do header */
+    margin: 0 auto; /* Centraliza o conteúdo */
+    padding: 0 15px; /* Adiciona espaçamento */
+}
 .contact-info {
     justify-content: space-between; /* Espaça igualmente os itens */
     align-items: center; /* Centraliza verticalmente os itens */
@@ -228,31 +243,6 @@ body {
     color: var(--cor-principal);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    .category-list {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .category-item {
-        width: 100%;
-        text-align: center;
-    }
-
-    .page-title {
-        padding: 20px 0;
-    }
-
-    .page-title h1 {
-        font-size: 24px;
-    }
-}
 
 /* Footer */
 footer {
@@ -338,6 +328,58 @@ footer p {
     background-color: var(--cor-principal);
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .category-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-item {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .page-title {
+    padding: 20px 0;
+  }
+  
+  .page-title h1 {
+    font-size: 24px;
+  }
+}
+
+.user-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.user-actions a {
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.user-actions a:hover {
+  color:var(--cor-principal);
+}
+
+.user-actions svg {
+  width: 18px;
+  height: 18px;
+}
+
     </style>
 
 </head>
@@ -369,15 +411,17 @@ footer p {
             <img src="{% static 'img/email_icon.png' %}" alt="Ícone de Email" width="20" height="20" class="me-2">
             <span>{{ loja.email }}</span>
         </div>          
-          <!-- Ícones das redes sociais -->
-          <div class="social-icons d-flex align-items-center ms-3">
-              <a href="{{ loja.facebook_url }}" target="_blank" class="me-3">
-                  <img src="{% static 'img/facebook_icon.png' %}" alt="Facebook" width="24" height="24">
-              </a>
-              <a href="{{ loja.instagram_url }}" target="_blank">
-                  <img src="{% static 'img/instagram_icon.png' %}" alt="Instagram" width="24" height="24">
-              </a>
-          </div>
+
+        
+        <!-- Ícones das redes sociais -->
+        <div class="social-icons d-flex align-items-center ms-3">
+            <a href="{{ loja.facebook_url }}" target="_blank" class="me-3">
+                <img src="{% static 'img/facebook_icon.png' %}" alt="Facebook" width="24" height="24">
+            </a>
+            <a href="{{ loja.instagram_url }}" target="_blank">
+                <img src="{% static 'img/instagram_icon.png' %}" alt="Instagram" width="24" height="24">
+            </a>
+        </div>
       </div>
   </div>
 </div>
@@ -395,26 +439,43 @@ footer p {
 
     
                 <!-- Navegação -->
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                      <ul class="navbar-nav ms-auto">
-                          <li class="nav-item">
-                              <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
-                          </li>
-                          <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
-                          <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
-                          <li class="nav-item"><a class="nav-link" href="/orcamento/?loja={{ loja.nome|lower }}">Orçamento</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/contato/?loja={{ loja.nome|lower }}">Contato</a></li>
-                      </ul>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
+            </li>
+            <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
+            <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
+            <li class="nav-item"><a class="nav-link" href="/orcamento/?loja={{ loja.nome|lower }}">Orçamento</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contato/?loja={{ loja.nome|lower }}">Contato</a></li>
+        </ul>
+    </div>
+</nav>
+                    
+                        <div class="user-actions">
+                            <a href="{% url 'login' loja=loja.nome|lower %}">  <!-- Passando o nome da loja para a URL -->
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            Área do Cliente
+                          </a>
+                          <a href="https://renovagraf.com.br/carrinho">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                            Carrinho
+                          </a>
+                        </div>
                   </div>
                 </nav>
             </header>
         </div>
     </div>
-        
+    <header class="header"></header>
     <div class="banner">
         <div class="slides">
             <div class="slide active">
@@ -431,101 +492,96 @@ footer p {
             </div>
         </div>
     </div>
-    
+    <header class="header"></header>
     <main class="container">
         <div class="products-grid">
 
-          <div class="product-card">
-            <img src="{% static 'img/livros.jpg' %}" alt="Livros" class="product-image">
-            <div class="product-info">
-                <h3 class="product-title">Livros</h3>
-                <p class="product-description">Impressos em Papel Off-set 75 g/m² capa brochura</p>
-                            
-                <button class="product-button">Confira Já</button>
-              </div>
+            <!-- Livros -->
+            <div class="product-card">
+                <img src="{% static 'img/livros.jpg' %}" alt="Livros" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Livros</h3>
+                    <p class="product-description">Impressos em Papel Off-set 75 g/m² capa brochura</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="livros">Confira Já</button>
+                </div>
             </div>
         
-          <!-- Cartão de Visita -->
-          <div class="product-card">
-            <img src="{% static 'img/cartao.png' %}" alt="Cartão de Visita" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Cartão de Visita</h3>
-              <p class="product-description">Impressão 4x4 cores em papel couchê 250g</p>
-              
-              <button class="product-button">Confira Já</button>
+            <!-- Cartão de Visita -->
+            <div class="product-card">
+                <img src="{% static 'img/cartao.png' %}" alt="Cartão de Visita" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Cartão de Visita</h3>
+                    <p class="product-description">Impressão 4x4 cores em papel couchê 250g</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="cartoes-de-visita">Confira Já</button>
+                </div>
             </div>
-          </div>
-      
-          <!-- Flyers -->
-          <div class="product-card">
-            <img src="{% static 'img/flyer.jpg' %}" alt="Flyers" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Flyers</h3>
-              <p class="product-description">Impressão 4x4 cores em papel couché 115g</p>
-             
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Flyers -->
+            <div class="product-card">
+                <img src="{% static 'img/flyer.jpg' %}" alt="Flyers" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Flyers</h3>
+                    <p class="product-description">Impressão 4x4 cores em papel couché 115g</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="flyers">Confira Já</button>
+                </div>
             </div>
-          </div>
-      
-          <!-- Folders -->
-          <div class="product-card">
-            <img src="{% static 'img/folder.jpg' %}" alt="Folders" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Folders</h3>
-              <p class="product-description">Impressão 4x4 cores em papel couché 90g</p>
-              
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Folders -->
+            <div class="product-card">
+                <img src="{% static 'img/folder.jpg' %}" alt="Folders" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Folders</h3>
+                    <p class="product-description">Impressão 4x4 cores em papel couché 90g</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="folders">Confira Já</button>
+                </div>
             </div>
-          </div>
-      
-          <!-- Banners -->
-          <div class="product-card">
-            <img src="{% static 'img/banner.png' %}" alt="Banners" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Banners</h3>
-              <p class="product-description">Impressão digital em lona 440g e bastão de madeira</p>
-              
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Banners -->
+            <div class="product-card">
+                <img src="{% static 'img/banner.png' %}" alt="Banners" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Banners</h3>
+                    <p class="product-description">Impressão digital em lona 440g e bastão de madeira</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="banners">Confira Já</button>
+                </div>
             </div>
-          </div>
-      
-          <!-- Catálogos -->
-          <div class="product-card">
-            <img src="{% static 'img/catalogo.jpg' %}" alt="Catálogos" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Catálogos</h3>
-              <p class="product-description">Impressão 4x4 cores com acabamento</p>
-              
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Catálogos -->
+            <div class="product-card">
+                <img src="{% static 'img/catalogo.jpg' %}" alt="Catálogos" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Catálogos</h3>
+                    <p class="product-description">Impressão 4x4 cores com acabamento</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="catalogos">Confira Já</button>
+                </div>
             </div>
-          </div>
-      
-          <!-- Adesivos -->
-          <div class="product-card">
-            <img src="{% static 'img/adesivos.jpg' %}" alt="Adesivos" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Adesivos</h3>
-              <p class="product-description">Impressão digital em vinil adesivo com recorte automatico</p>
-              
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Adesivos -->
+            <div class="product-card">
+                <img src="{% static 'img/adesivos.jpg' %}" alt="Adesivos" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Adesivos</h3>
+                    <p class="product-description">Impressão digital em vinil adesivo com recorte automático</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="adesivos">Confira Já</button>
+                </div>
             </div>
-          </div>
-
-          <!-- Wind Banner -->
-          <div class="product-card">
-            <img src="{% static 'img/windbanner.png' %}" alt="Flyers" class="product-image">
-            <div class="product-info">
-              <h3 class="product-title">Wind Banner</h3>
-              <p class="product-description">Impressão em tecido ambos os lados</p>
-             
-              <button class="product-button">Confira Já</button>
+        
+            <!-- Wind Banner -->
+            <div class="product-card">
+                <img src="{% static 'img/windbanner.png' %}" alt="Wind Banner" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Wind Banner</h3>
+                    <p class="product-description">Impressão em tecido ambos os lados</p>
+                    <button class="product-button" data-loja="{{ loja.nome|lower }}" data-produto="windbanner">Confira Já</button>
+                </div>
             </div>
-          </div>
-
+        
         </div>
       </main>
     
     <footer>
+
+        
         <div class="container">
             <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 250px; margin: 20px;">
@@ -542,6 +598,15 @@ footer p {
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+              <div style="flex: 1;">
+                <a href="https://portalgrafica.renovagraf.com.br" style="color: var(--cor-principal); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; background: #fff; padding: 8px 15px; border-radius: 4px; margin-bottom: 20px; transition: all 0.3s;">
+                  <svg viewBox="0 0 24 24" fill="currentColor" style="width: 14px; height: 14px;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                  </svg>
+                  Portal Gr&#xe1;fica
+                </a>
     </footer>
 
     <script>
@@ -555,6 +620,26 @@ footer p {
         }
         setInterval(mostrarSlides, 3000); 
         mostrarSlides(); // Mostra a primeira imagem
+
+        document.addEventListener("DOMContentLoaded", function() {
+    // Obtenha todos os botões de "Confira Já"
+    const productButtons = document.querySelectorAll('.product-button');
+
+    // Para cada botão, adicione um evento de clique
+    productButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Obtenha os dados da loja e do produto do botão
+            const lojaName = button.getAttribute('data-loja');
+            const produtoName = button.getAttribute('data-produto');
+
+            // Crie a URL para o produto específico
+            const productUrl = `/loja/${lojaName}/${produtoName}/`;  // A URL agora é dinâmica
+
+            // Redirecione para a URL do produto
+            window.location.href = productUrl;
+        });
+    });
+});
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

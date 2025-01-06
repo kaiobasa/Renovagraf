@@ -1,0 +1,791 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressão de Flyers | Renovagraf</title>
+    <meta name="description" content="Impressão de flyers com qualidade profissional. Diversos formatos e acabamentos disponíveis.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700" rel="stylesheet">
+    
+    <style>
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Fira Sans', sans-serif;
+  line-height: 1.6;
+  background: #fff;
+}
+
+.header {
+  background: #fff;
+  border-bottom: 3px solid #e31e24;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Product Display */
+.product-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px 0;
+}
+
+.product-gallery {
+  position: relative;
+}
+
+.main-image {
+  width: 100%;
+  height: 400px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.thumbnail {
+  background: #f5f5f5;
+  padding-bottom: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.thumbnail.active {
+  border: 2px solid #e31e24;
+}
+
+.product-info {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.product-title {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.product-description {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.price-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.price-box-title {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.total-price {
+  font-size: 32px;
+  color: #e31e24;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.unit-price {
+  font-size: 16px;
+  color: #666;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.unit-price span {
+  color: #e31e24;
+  font-weight: bold;
+}
+
+.product-options {
+  margin-bottom: 30px;
+}
+
+.option-group {
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.option-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.quantity-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.add-to-cart {
+  background: #e31e24;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.add-to-cart:hover {
+  background: #c41920;
+}
+
+.product-details {
+  margin-top: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.details-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  border-bottom-color: #e31e24;
+  color: #e31e24;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px 0;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.file-upload {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.file-upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f5f5f5;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.file-upload-button:hover {
+  background: #eee;
+  border-color: #e31e24;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.uploaded-files {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.remove-file {
+  color: #e31e24;
+  cursor: pointer;
+}
+
+.shipping-calculator {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.shipping-calculator-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.shipping-calculator-button:hover {
+  background: #f8f8f8;
+  border-color: #e31e24;
+}
+
+.shipping-form {
+  display: none;
+  margin-top: 15px;
+}
+
+.shipping-form.active {
+  display: block;
+}
+
+.shipping-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.shipping-submit {
+  background: #e31e24;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.shipping-submit:hover {
+  background: #c41920;
+}
+
+.shipping-result {
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 4px;
+  display: none;
+}
+
+.shipping-result.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .product-display {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-image {
+    height: 300px;
+  }
+}
+
+
+.renovagraf .top-bar, .infinity .top-bar, .prime .top-bar {
+    background-color: var(--cor-principal);
+}
+
+.top-bar {
+    background: var(--cor-principal);
+    color: #fff;
+    padding: 11px 0;
+}
+
+/* Footer */
+footer {
+    background: var(--cor-principal);
+    color: #fff;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+footer div {
+    flex: 1;
+    min-width: 250px;
+    margin: 20px;
+}
+
+footer h3 {
+    color: var(--cor-secundaria);
+}
+
+footer p {
+    font-size: 14px;
+}
+    </style>
+</head>
+
+<body>
+    <div class="styleHeader">
+        <div class="top-bar red text-white py-2">
+            <div class="container d-flex flex-wrap justify-content-between">
+                <span>Rua Orfanato, 1205 - Vila Prudente - SP</span>
+                <span>(11) 2667-0333</span>
+                <span>contato@renovagraf.com.br</span>
+            </div>
+        </div>
+
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
+                <a href="/" class="navbar-brand">
+                    <img src="{% static 'img/logo.png' %}" alt="Logo" width="220" height="60">
+                </a>
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/produtos">Produtos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/servicos">Serviços</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/orcamento">Orçamento</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/contato">Contato</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+        </div>
+    </div>
+    <header class="header"></header>
+    <main class="container">
+      <div class="product-display">
+        <div class="product-gallery">
+          <div class="main-image" id="main-image-container">
+            <img id="flyer-preview" src="{% static 'img/flyer/flyer4x4.png' %}" alt="Flyer Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          </div>
+    
+          
+
+      <div class="product-details">
+        <div class="details-tabs">
+          <div class="tab active">Descrição</div>
+          <div class="tab">Especificações</div>
+          <div class="tab">Arquivo</div>
+        </div>
+
+        <div class="tab-content active">
+          <h3>Descrição do Produto</h3>
+          <p>Os flyers são uma ferramenta essencial para divulgação de produtos, serviços ou eventos. Nossa impressão offset garante cores vivas e fiéis, com acabamento profissional em diversos tipos de papel.</p>
+          <ul style="margin: 20px 0 0 20px;">
+            <li>Alta qualidade de impressão</li>
+            <li>Papel de primeira linha</li>
+            <li>Acabamento profissional</li>
+            <li>Entrega rápida</li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+          <h3>Especificações Técnicas</h3>
+          <ul style="margin: 20px 0 0 20px;">
+            <li>Impressão Offset</li>
+            <li>Resolução: 300 DPI</li>
+            <li>Sangria: 2mm</li>
+            <li>Formato de arquivo: PDF, JPG, AI, CDR</li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+          <h3>Preparação do Arquivo</h3>
+          <p>Para garantir a melhor qualidade de impressão, siga nossas orientações:</p>
+          <ul style="margin: 20px 0 0 20px;">
+            <li>Arquivos em CMYK</li>
+            <li>Fontes convertidas em curvas</li>
+            <li>Imagens em alta resolução</li>
+            <li>Sangria de 2mm em todos os lados</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">Impressão de Flyers</h1>
+      <p class="product-description">Flyers impressos em alta qualidade para divulgação do seu negócio ou evento. Impressão offset com cores vivas e acabamento profissional.</p>
+      
+
+
+      <div class="product-options">
+        <div class="option-group">
+          <label class="option-label">Formato:</label>
+          <select class="option-select" data-type="format">
+            <option value="100x148">100x148mm</option>
+            <option value="105x148">105x148mm</option>
+            <option value="100x200">100x200mm</option>
+            <option value="100x210">100x210mm</option>
+            <option value="148x200">148x200mm</option>
+            <option value="148x210">148x210mm</option>
+            <option value="210x297">210x297mm</option>
+            <option value="298x406">298x406mm</option>
+            <option value="297x420">297x420mm</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label">Papel:</label>
+          <select class="option-select" data-type="paper">
+            <option value="offset75">Offset 75g/m²</option>
+            <option value="offset90">Offset 90g/m²</option>
+            <option value="offset120">Offset 120g/m²</option>
+            <option value="couche90">Couchê 90g/m²</option>
+            <option value="couche115">Couchê 115g/m²</option>
+            <option value="couche150">Couchê 150g/m²</option>
+            <option value="couche170">Couchê 170g/m²</option>
+            <option value="couche250">Couchê 250g/m²</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label">Cores:</label>
+          <select class="option-select" data-type="colors" id="color-selector">
+            <option value="4x4">4x4 (Frente e verso coloridos)</option>
+            <option value="4x0">4x0 (Frente colorida)</option>            
+            <option value="1x1">1x1 (Preto e Branco Frente e verso)</option>
+            <option value="1x0">1x0 (Preto e Branco Frente )</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label class="option-label">Quantidade:</label>
+          <select class="option-select" data-type="quantity">
+            <option value="50">50 unidades</option>
+            <option value="100">100 unidades</option>
+            <option value="250">250 unidades</option>
+            <option value="500">500 unidades</option>
+            <option value="1000">1.000 unidades</option>
+            <option value="2500">2.500 unidades</option>
+            <option value="5000">5.000 unidades</option>
+            <option value="10000">10.000 unidades</option>
+          </select>
+        </div>
+        
+      </div>
+      <div class="price-box">
+        <div class="price-box-title">Valor desse pedido:</div>
+        <div class="total-price">R$ 199,00</div>
+        <div class="unit-price">
+          Valor de cada unidade: <span>R$ 0,19</span>
+        </div>
+      </div>      
+
+      <button class="add-to-cart">Prosseguir</button>
+
+      <div class="file-upload" style="margin-top: 20px;">
+        <label class="file-upload-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Enviar Arquivos
+          <input type="file" multiple accept=".pdf,.ai,.cdr,.jpg,.jpeg,.png">
+        </label>
+        <div class="uploaded-files"></div>
+      </div>
+
+      <div class="shipping-calculator" style="margin-top: 20px;">
+        <button class="shipping-calculator-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="8" x2="8" y2="8"/>
+            <line x1="16" y1="12" x2="8" y2="12"/>
+            <line x1="16" y1="16" x2="8" y2="16"/>
+          </svg>
+          Calcular Frete
+        </button>
+        
+        <div class="shipping-form">
+          <input type="text" class="shipping-input" placeholder="Digite seu CEP" maxlength="8">
+          <button class="shipping-submit">Calcular</button>
+          
+          <div class="shipping-result">
+            <h4>Opções de Envio:</h4>
+            <div class="shipping-options"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+    <!-- Footer -->
+    <footer style="background: #333; color: #fff; padding: 40px 0; margin-top: 50px;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 250px; margin: 20px;">
+                <h3 style="color: #e31e24; margin-bottom: 20px;">Renovagraf</h3>
+                <p style="color: #ffffff;" ></p> Rua Orfanato, 1205 - Vila Prudente <br>
+                São Paulo - SP<br>
+                CEP: 03131-010</p>
+              </div>
+              
+              <div style="flex: 1; min-width: 250px; margin: 20px;">
+                <h3 style="color: #e31e24; margin-bottom: 20px;">Contato</h3>
+                <p style="color: #ffffff;" > (11) 2667-001 <br>
+                contato@renovagraf.com.br</p>
+              </div>
+              
+              <div style="flex: 1; min-width: 250px; margin: 20px;">
+                <h3 style="color: #e31e24; margin-bottom: 20px;">Horário de Atendimento</h3>
+                <p style="color: #ffffff;" ></p>Segunda a Sexta<br>
+                08:00 às 18:00</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <script>
+          // Tab switching
+          document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+              // Remove active class from all tabs and contents
+              document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+              
+              // Add active class to clicked tab and corresponding content
+              tab.classList.add('active');
+              document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+          });
+          
+          // Função para atualizar o preço
+          function atualizarPreco() {
+            let precoBase = 50; // Preço base inicial
+            const formato = document.querySelector('[data-type="format"]').value;
+            const papel = document.querySelector('[data-type="paper"]').value;
+            const cores = document.querySelector('[data-type="colors"]').value;
+            const quantidade = parseInt(document.querySelector('[data-type="quantity"]').value);
+            
+            // Multiplicadores de formato
+            const formatosMultiplicadores = {
+              '100x148': 1,
+              '105x148': 1,
+              '100x200': 1.2,
+              '100x210': 1.2,
+              '148x200': 1.4,
+              '148x210': 1.4,
+              '210x297': 1.8,
+              '298x406': 2.2,
+              '297x420': 2.2
+            };
+            
+            // Multiplicadores de papel
+            const papeisMultiplicadores = {
+              'offset75': 1,
+              'offset90': 1.1,
+              'offset120': 1.2,
+              'couche90': 1.3,
+              'couche115': 1.4,
+              'couche150': 1.5,
+              'couche170': 1.6,
+              'couche250': 1.8
+            };
+            
+            // Multiplicadores de cores
+            const coresMultiplicadores = {
+              '4x0': 1.5,
+              '4x4': 2,
+              '1x0': 1,
+              '1x1': 1.3
+            };
+            
+            // Multiplicadores de quantidade
+            const quantidadeMultiplicadores = {
+              50: 1,
+              100: 1.5,
+              250: 2,
+              500: 3,
+              1000: 5,
+              2500: 10,
+              5000: 18,
+              10000: 32
+            };
+            
+            // Aplicar multiplicadores
+            precoBase *= formatosMultiplicadores[formato] || 1;
+            precoBase *= papeisMultiplicadores[papel] || 1;
+            precoBase *= coresMultiplicadores[cores] || 1;
+            precoBase *= quantidadeMultiplicadores[quantidade] || 1;
+            
+            // Calcular preço unitário
+            const precoUnitario = precoBase / quantidade;
+            
+            // Atualizar displays de preço
+            document.querySelector('.total-price').textContent = 
+              `R$ ${precoBase.toFixed(2).replace('.', ',')}`;
+            document.querySelector('.unit-price span').textContent = 
+              `R$ ${precoUnitario.toFixed(2).replace('.', ',')}`;
+              
+
+          }
+          
+           // Função que altera a imagem conforme a cor selecionada
+  document.getElementById('color-selector').addEventListener('change', function() {
+    var selectedColor = this.value; // Valor da cor selecionada
+    var imagePath = '/static/img/flyer/flyer' + selectedColor + '.png'; // Caminho da imagem
+
+    // Alterando o src da imagem
+    document.getElementById('flyer-preview').src = imagePath;
+  });
+          
+          // Atualizar event listeners
+          document.querySelectorAll('.option-select').forEach(select => {
+            select.addEventListener('change', atualizarPreco);
+          });
+          
+          // Chamar função inicial
+          atualizarPreco();
+          
+          // File upload handling
+          document.querySelector('.file-upload input').addEventListener('change', function(e) {
+            const filesDiv = document.querySelector('.uploaded-files');
+            filesDiv.innerHTML = '';
+            
+            Array.from(this.files).forEach(file => {
+              const fileDiv = document.createElement('div');
+              fileDiv.className = 'uploaded-file';
+              fileDiv.innerHTML = `
+                <span>${file.name}</span>
+                <span class="remove-file">×</span>
+              `;
+              filesDiv.appendChild(fileDiv);
+              
+              fileDiv.querySelector('.remove-file').addEventListener('click', () => {
+                fileDiv.remove();
+              });
+            });
+          });
+          
+          // Shipping calculator functionality
+          const shippingButton = document.querySelector('.shipping-calculator-button');
+          const shippingForm = document.querySelector('.shipping-form');
+          const shippingInput = document.querySelector('.shipping-input');
+          const shippingSubmit = document.querySelector('.shipping-submit');
+          const shippingResult = document.querySelector('.shipping-result');
+          const shippingOptions = document.querySelector('.shipping-options');
+          
+          shippingButton.addEventListener('click', () => {
+            shippingForm.classList.toggle('active');
+          });
+          
+          shippingInput.addEventListener('input', (e) => {
+            // Allow only numbers
+            e.target.value = e.target.value.replace(/\D/g, '');
+          });
+          
+          shippingSubmit.addEventListener('click', () => {
+            const cep = shippingInput.value;
+            if (cep.length !== 8) {
+              alert('Por favor, digite um CEP válido');
+              return;
+            }
+            
+            // Simulate shipping calculation
+            calculateShipping(cep);
+          });
+          
+          function calculateShipping(cep) {
+            // Simulate API call with loading state
+            shippingOptions.innerHTML = '<p>Calculando...</p>';
+            shippingResult.classList.add('active');
+            
+            // Simulate response delay
+            setTimeout(() => {
+              const options = [
+                { service: 'PAC', price: 25.90, days: 8 },
+                { service: 'SEDEX', price: 45.90, days: 3 }
+              ];
+              
+              shippingOptions.innerHTML = options.map(option => `
+                <div style="padding: 10px; border-bottom: 1px solid #eee;">
+                  <strong>${option.service}</strong><br>
+                  R$ ${option.price.toFixed(2).replace('.', ',')} - 
+                  Entrega em até ${option.days} dias úteis
+                </div>
+              `).join('');
+            }, 1000);
+          }
+          
+          // Add to cart button
+          document.querySelector('.add-to-cart').addEventListener('click', () => {
+            const filesUploaded = document.querySelector('.uploaded-files').children.length > 0;
+            if (!filesUploaded) {
+              alert('Por favor, envie seus arquivos antes de prosseguir.');
+              return;
+            }
+            // Implement your checkout functionality here
+            alert('Prosseguindo para a finalização do pedido...');
+          });
+          
+          // Initial price update
+          atualizarPreco();
+          </script>
+</body>
+</html>

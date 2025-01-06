@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,400 +7,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ loja.nome }} - Loja{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'img/' %}{{ loja.favicon }}">
+
+    <!-- Bootstrap Externo -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="{% static 'css/produtos.css' %}">
+
+    <!-- Bloco para CSS Específico -->
+    {% block head %}
+    {% endblock %}
+
     <style>
         /* Definir cores dinâmicas */
-:root {
-    --cor-principal: {{ loja.cor_principal }};
-    --cor-secundaria: {{ loja.cor_secundaria }};
-}
+        :root {
+            --cor-principal: {{ loja.cor_principal }};
+            --cor-secundaria: {{ loja.cor_secundaria }};
+        }
 
-/* Reset & Base */
+        /* Reset & Base */
+        body {
+            font-family: 'Fira Sans', sans-serif;
+            line-height: 1.6;
+            background: #fff;
+        }
 
-
-body {
-    font-family: 'Fira Sans', sans-serif;
-    line-height: 1.6;
-    background: #fff;
-}
-
-
-
-.texto {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-}
-
-/* Header */
-.styleHeader {
-    background: #fff;
-    border-bottom: 0px solid;
-}
-
-.top-bar {
-    background: var(--cor-principal);
-    color: #fff;
-    padding: 11px 0;
-}
-
-.contact-info {
-    justify-content: space-between; /* Espaça igualmente os itens */
-    align-items: center; /* Centraliza verticalmente os itens */
-    width: 100%;
-}
-
-.contact-info span {
-    margin-right: 190px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
-
-/* Products Grid */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 40px 0;
-}
-
-.product-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    overflow: hidden;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.product-info {
-    padding: 20px;
-}
-
-.product-title {
-    color: #333;
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
-.product-description {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.product-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* Produtos */
-.product-button {
-    background: var(--cor-principal);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s, transform 0.3s ease, filter 0.3s ease;
-}
-
-
-.product-button:hover {
-      background: #19c430;
-    }
-
-/* Category Navigation */
-.category-nav {
-    background: #f8f8f8;
-    padding: 20px 0;
-    margin-bottom: 30px;
-}
-
-.category-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    list-style: none;
-}
-
-.category-item {
-    padding: 8px 15px;
-    background: #a01414;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-/* Categoria selecionada com cor dinâmica */
-.category-item:hover,
-.category-item.active {
-    background: var(--cor-principal);
-    color: #fff;
-    border-color: var(--cor-principal);
-}
-
-/* Page Title */
-.page-title {
-    text-align: center;
-    padding: 40px 0;
-    background: #f8f8f8;
-}
-
-.page-title h1 {
-    color: #333;
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.page-title p {
-    color: #666;
-    font-size: 16px;
-}
-
-/* Navegação */
-.navbar-menu-home {
-    background: #fff;
-    padding: 0px 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.nav-list {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    padding: 10px;
-    margin: 0;
-}
-
-.nav-list a {
-    color: #333;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-/* Link da navegação - cor dinâmica ao passar o mouse */
-.nav-list a:hover {
-    color: var(--cor-principal);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    .category-list {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .category-item {
-        width: 100%;
-        text-align: center;
-    }
-
-    .page-title {
-        padding: 20px 0;
-    }
-
-    .page-title h1 {
-        font-size: 24px;
-    }
-}
-
-/* Footer */
-footer {
-    background: var(--cor-principal);
-    color: #fff;
-    padding: 40px 0;
-    margin-top: 50px;
-}
-
-footer .container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-footer div {
-    flex: 1;
-    min-width: 250px;
-    margin: 20px;
-}
-
-footer h3 {
-    color: var(--cor-secundaria);
-}
-
-footer p {
-    font-size: 14px;
-}
-
-/* Customização das lojas */
-
-/* Renovagraf */
-.renovagraf {
-    --cor-principal: #e31e24; /* Renovagraf red */
-    --cor-secundaria: #f8f8f8; /* Background */
-}
-
-.renovagraf .top-bar {
-    background-color: var(--cor-principal);
-}
-
-.renovagraf .product-button {
-    background-color: var(--cor-principal);
-}
-
-.renovagraf footer {
-    background-color: var(--cor-principal);
-}
-
-/* Infinity */
-.infinity {
-    --cor-principal: #005eb8; /* Infinity blue */
-    --cor-secundaria: #f8f8f8; /* Background */
-}
-
-.infinity .top-bar {
-    background-color: var(--cor-principal);
-}
-
-.infinity .product-button {
-    background-color: var(--cor-principal);
-}
-
-.infinity footer {
-    background-color: var(--cor-principal);
-}
-
-/* Prime */
-.prime {
-    --cor-principal: #0c0c0ce8; /* PrimeGraph green */
-    --cor-secundaria: #f8f8f8; /* Background */
-}
-
-.prime .top-bar {
-    background-color: var(--cor-principal);
-}
-
-.prime .product-button {
-    background-color: var(--cor-principal);
-}
-
-.prime footer {
-    background-color: var(--cor-principal);
-}
-
-</style>
+        /* Outros estilos do seu site */
+        /* ... */
+    </style>
 
 </head>
 <body>
 
-  </div>
-</div>
-</div>
-</div>
-<div class="styleHeader">
-  <!-- Barra de Contato -->
-  <div class="top-bar text-white py-2">
-    <div class="container d-flex flex-wrap justify-content-between align-items-center">
-        <!-- Endereço com ícone -->
-        <div class="d-flex align-items-center">
-            <img src="{% static 'img/localizacao_icon.png' %}" alt="Ícone de Localização" width="20" height="20" class="me-2">
-           
-            <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome|lower }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
-        </div>
-
-        <!-- Telefone com ícone -->
-        <div class="d-flex align-items-center">
-            <img src="{% static 'img/telefone_icon.png' %}" alt="Ícone de Telefone" width="20" height="20" class="me-2">
-            <span>{{ loja.telefone }}</span>
-        </div>
-
-        <!-- Email com ícone -->
-        <div class="d-flex align-items-center">
-            <img src="{% static 'img/email_icon.png' %}" alt="Ícone de Email" width="20" height="20" class="me-2">
-            <span>{{ loja.email }}</span>
-        </div>          
-          <!-- Ícones das redes sociais -->
-          <div class="social-icons d-flex align-items-center ms-3">
-              <a href="{{ loja.facebook_url }}" target="_blank" class="me-3">
-                  <img src="{% static 'img/facebook_icon.png' %}" alt="Facebook" width="24" height="24">
-              </a>
-              <a href="{{ loja.instagram_url }}" target="_blank">
-                  <img src="{% static 'img/instagram_icon.png' %}" alt="Instagram" width="24" height="24">
-              </a>
-          </div>
-      </div>
-  </div>
-</div>
-
-   
-    
-        <!-- Logo e Menu de Navegação -->
-<div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
-        <!-- Logo da Loja -->
-        <a href="{% url 'home_loja' loja=loja.nome|lower %}" class="navbar-brand">
-          <img src="{% static 'img/' %}{{ loja.logo }}" alt="Logo {{ loja.nome }}" width="220" height="60">
-      </a>
-      
-
-    
-                <!-- Navegação -->
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                      <ul class="navbar-nav ms-auto">
-                          <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
-                          </li>
-                          <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
-                          <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
-                          <li class="nav-item"><a class="nav-link" href="/orcamento/?loja={{ loja.nome|lower }}">Orçamento</a></li>
-                          <li class="nav-item"><a class="nav-link" href="/contato/?loja={{ loja.nome|lower }}">Contato</a></li>
-                      </ul>
-                  </div>
-                </nav>
+    <!-- Conteúdo do Cabeçalho e Barra de Contato -->
+    <div class="styleHeader">
+        <div class="top-bar text-white py-2">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="{% static 'img/localizacao_icon.png' %}" alt="Ícone de Localização" width="20" height="20" class="me-2">
+                    <a class="nav-link" href="{{ loja.endereco_url }}?loja={{ loja.nome|lower }}">Rua Orfanato, 1205 - Vila Prudente - SP</a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <img src="{% static 'img/telefone_icon.png' %}" alt="Ícone de Telefone" width="20" height="20" class="me-2">
+                    <span>{{ loja.telefone }}</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <img src="{% static 'img/email_icon.png' %}" alt="Ícone de Email" width="20" height="20" class="me-2">
+                    <span>{{ loja.email }}</span>
+                </div>
+                <div class="social-icons d-flex align-items-center ms-3">
+                    <a href="{{ loja.facebook_url }}" target="_blank" class="me-3">
+                        <img src="{% static 'img/facebook_icon.png' %}" alt="Facebook" width="24" height="24">
+                    </a>
+                    <a href="{{ loja.instagram_url }}" target="_blank">
+                        <img src="{% static 'img/instagram_icon.png' %}" alt="Instagram" width="24" height="24">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Conteúdo da página -->
+        <!-- Logo e Menu de Navegação -->
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between py-3">
+                <!-- Logo da Loja -->
+                <a href="{% url 'home_loja' loja=loja.nome|lower %}" class="navbar-brand">
+                  <img src="{% static 'img/' %}{{ loja.logo }}" alt="Logo {{ loja.nome }}" width="220" height="60">
+              </a>
+              
+        
+            
+                        <!-- Navegação -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home_loja' loja=loja.nome|lower %}">Home</a>
+                    </li>
+                    <a class="nav-link" href="{{ loja.blog_url }}?loja={{ loja.nome|lower }}">Blog</a>
+                    <a class="nav-link" href="{{ loja.quem_somos_url }}?loja={{ loja.nome|lower }}">Quem Somos</a>
+                    <li class="nav-item"><a class="nav-link" href="/orcamento/?loja={{ loja.nome|lower }}">Orçamento</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contato/?loja={{ loja.nome|lower }}">Contato</a></li>
+                </ul>
+            </div>
+        </nav>
+                            
+        <div class="user-actions">
+            <a href="{% url 'login' loja=loja.nome|lower %}">  <!-- Passando o nome da loja para a URL -->
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            Área do Cliente
+                                  </a>
+                                  <a href="https://renovagraf.com.br/carrinho">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                                    </svg>
+                                    Carrinho
+                                  </a>
+                                </div>
+                          </div>
+                        </nav>
+                    </header>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Conteúdo da Página -->
     <main class="container">
         {% block content %}
-        <!-- O conteúdo da página será injetado aqui -->
         {% endblock %}
     </main>
 
-    <!-- Parte inferior (Footer) -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
@@ -417,9 +141,22 @@ footer p {
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px;">
+              <div style="flex: 1;">
+                <a href="https://portalgrafica.renovagraf.com.br" style="color: var(--cor-principal); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; background: #fff; padding: 8px 15px; border-radius: 4px; margin-bottom: 20px; transition: all 0.3s;">
+                  <svg viewBox="0 0 24 24" fill="currentColor" style="width: 14px; height: 14px;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                  </svg>
+                  Portal Gr&#xe1;fica
+                </a>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% block scripts %}
+    {% endblock %}
 
 </body>
 </html>
