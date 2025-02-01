@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'loja',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'renovagraf.urls'
@@ -56,24 +58,24 @@ ROOT_URLCONF = 'renovagraf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'templates',  # Esta linha permite que o Django busque templates na pasta 'templates' no diretório base
-        ],
-        'APP_DIRS': True,  # Permite buscar templates dentro das pastas das apps
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
         'OPTIONS': {
-            
-  
-'context_processors': [
+            'context_processors': [
+                # Outras opções padrão
                 'django.template.context_processors.debug',
-                
-              
-'django.template.context_processors.request',
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                # Nosso context processor de loja
+                'loja.context_processors.loja_context',
             ],
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'renovagraf.wsgi.application'
 
@@ -147,3 +149,11 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'desenvolvimento@renovagraf.com.br'  # Substitua pelo seu e-mail
 EMAIL_HOST_PASSWORD = 'Amapa244'  # Substitua pela sua senha ou senha de app do Gmail
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+AUTH_USER_MODEL = 'usuarios.Usuario'
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+]

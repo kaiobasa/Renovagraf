@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- Referenciando o CSS específico para o produto -->
+<link rel="stylesheet" href="{% static 'css/produtos.css' %}">
+
+{% block content %}
+<header class="header"></header>
+<main class="container">
+    <div class="login-container">
+        <div class="login-section">
+            <h2 class="section-title">Identificação</h2>
+            <p style="margin-bottom: 20px; color: #666;">Já possui cadastro conosco? Acesse sua conta</p>
+            
+            <form id="loginForm" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Digite seu e-mail</label>
+                    <input type="email" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span>Acessar</span>
+                </button>
+                <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+            </form>
+            </div>
+            
+            <div class="login-section">
+                <h2 class="section-title">Não tem cadastro?</h2>
+                <p style="margin-bottom: 20px; color: #666;">Informe seu e-mail abaixo para criar sua conta</p>
+                <form id="registerForm" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-label">Digite seu e-mail</label>
+                        <input type="email" name="register_email" class="form-control" required>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span>Cadastrar</span>
+                    </button>
+                </form>
+            
+
+                <div class="info-box">
+                    <strong>Compra 100% Segura</strong>
+                    Fique tranquilo, sua compra está protegida!<br>
+                    Este site possui certificado SSL
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

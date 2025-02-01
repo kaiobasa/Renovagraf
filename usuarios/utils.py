@@ -1,14 +1,11 @@
-# utils.py
-
-from .models import Loja
+from loja.models import Loja  # Corrigir importação do modelo Loja
 
 def obter_loja(nome_loja):
     try:
         loja = Loja.objects.get(nome=nome_loja)
         return loja
     except Loja.DoesNotExist:
-        
-       return None
+        return None
 
 def get_loja_data(loja_param):
     lojas = {

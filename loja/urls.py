@@ -4,20 +4,14 @@ from . import views
 urlpatterns = [
     # Página inicial
     path('', views.home, name='home'),  
-    
-    # Página inicial com loja específica
     path('<str:loja>/', views.home, name='home_loja'),  
 
     # Página de login
     path('<str:loja>/login/', views.login, name='login'), 
 
-     # URL para o cadastro de usuário
-    path('<str:loja>/cadastro', views.cadastro_usuario, name='cadastro_usuario'),
+    # URL para o cadastro de usuário
+    path('<str:loja>/cadastro/', views.cadastro_usuario, name='cadastro_usuario'),
 
-
-
-    
-    
     # Rotas para os produtos da loja
     path('<str:loja>/flyers/', views.flyers, name='flyers'),  
     path('<str:loja>/livros/', views.livros, name='livros'),

@@ -25,7 +25,8 @@
         
         <div class="login-links">
           <a href="/esqueci-senha">Esqueci minha senha</a>
-          <a href="{% url 'cadastro_usuario' loja=loja.nome|lower %}">Cadastre-se</a>
+          <a href="{% url 'usuarios:cadastro_usuario' loja=loja.nome|lower %}">Cadastre-se</a>
+
         </div>
       </form>
     </div>
