@@ -1,16 +1,45 @@
-from loja.models import Loja  # Corrigir importação do modelo Loja
+from loja.models import Loja
+import random
+import string
+from django.core.mail import send_mail
+from django.conf import settings
 
-def obter_loja(nome_loja):
+def gerar_e_enviar_codigo_verificacao(usuario):
+    # Gera um código de 6 dígitos
+    codigo = ''.join(random.choices(string.digits, k=6))
+    
+    # Salva o código no usuário
+    usuario.codigo_verificacao = codigo
+    usuario.save()
+
+    # Envia o e-mail com o código
     try:
-        loja = Loja.objects.get(nome=nome_loja)
-        return loja
+        send_mail(
+            subject='Código de Verificação - Renovagraf',
+            message=f'Seu código de verificação é: {codigo}. Por favor, insira este código na página de verificação.',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[usuario.email],
+            fail_silently=False,
+        )
+        print(f"E-mail enviado com sucesso para {usuario.email}!")
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
+
+def get_loja_data(nome_loja):
+    """
+    Retorna uma instância válida do modelo Loja ou None se a loja não existir.
+    """
+    try:
+        return Loja.objects.get(nome__iexact=nome_loja)
     except Loja.DoesNotExist:
         return None
+
 
 def get_loja_data(loja_param):
     lojas = {
         'renovagraf': {
             'nome': 'Renovagraf',
+            'dominio': 'https://renovagraf.com.br',  # Domínio específico da Renovagraf
             'cor_principal': '#e31e24',
             'cor_secundaria': '#f8f8f8',
             'logo': 'logo_renovagraf.png',
@@ -25,6 +54,7 @@ def get_loja_data(loja_param):
         },
         'infinitygrafica': {
             'nome': 'Infinitygrafica',
+            'dominio': 'https://infinitygrafica.com.br',  # Domínio específico da Infinitygrafica
             'cor_principal': '#005eb8',
             'cor_secundaria': '#f8f8f8',
             'logo': 'logo_infinity.png',
@@ -39,6 +69,7 @@ def get_loja_data(loja_param):
         },
         'primegraph': {
             'nome': 'PrimeGraph',
+            'dominio': 'https://primegraph.com.br',  # Domínio específico da PrimeGraph
             'cor_principal': '#0c0c0ce8',
             'cor_secundaria': '#f8f8f8',
             'logo': 'logo_primegraph.png',
@@ -49,3 +80,13 @@ def get_loja_data(loja_param):
         }
     }
     return lojas.get(loja_param.lower(), lojas['renovagraf'])  # Loja padrão se não existir
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+def enviar_email_verificacao(usuario):
+    """
+    Simula o envio de um e-mail de verificação.
+    Substitua esta função com a lógica real de envio de e-mail.
+    """
+    print(f"Enviando código de verificação para {usuario.email}: {usuario.codigo_verificacao}")

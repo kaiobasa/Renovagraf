@@ -3,54 +3,80 @@
 
 <!-- Referenciando o CSS específico para o produto -->
 <link rel="stylesheet" href="{% static 'css/produtos.css' %}">
+<!-- Incluindo o Font Awesome para os ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 {% block content %}
 <header class="header"></header>
 <main class="container">
     <div class="login-container">
+        <!-- Formulário de Login -->
         <div class="login-section">
             <h2 class="section-title">Identificação</h2>
-            <p style="margin-bottom: 20px; color: #666;">Já possui cadastro conosco? Acesse sua conta</p>
-            
-            <form id="loginForm" method="post">
+            <p style="margin-bottom: 20px; color: #666;">Já possui cadastro? Acesse sua conta</p>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p class="message {{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form id="loginForm" method="post" action="{% url 'usuarios:login' loja=loja.nome %}">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="form-label">Digite seu e-mail</label>
                     <input type="email" name="username" class="form-control" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-field">
                     <label class="form-label">Senha</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <input type="password" name="password" id="passwordInput" class="form-control" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility()">
+                        <i id="passwordIcon" class="fa fa-eye"></i>
+                    </span>
                 </div>
                 <button type="submit" class="submit-btn">
                     <span>Acessar</span>
                 </button>
                 <a href="#" class="forgot-password">Esqueceu sua senha?</a>
             </form>
-            </div>
-            
-            <div class="login-section">
-                <h2 class="section-title">Não tem cadastro?</h2>
-                <p style="margin-bottom: 20px; color: #666;">Informe seu e-mail abaixo para criar sua conta</p>
-                <form id="registerForm" method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label class="form-label">Digite seu e-mail</label>
-                        <input type="email" name="register_email" class="form-control" required>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <span>Cadastrar</span>
-                    </button>
-                </form>
-            
+        </div>
 
-                <div class="info-box">
-                    <strong>Compra 100% Segura</strong>
-                    Fique tranquilo, sua compra está protegida!<br>
-                    Este site possui certificado SSL
-                </div>
+        <!-- Formulário de Cadastro de E-mail -->
+        <div class="login-section">
+            <h2 class="section-title">Não tem cadastro?</h2>
+            <p style="margin-bottom: 20px; color: #666;">Clique aqui para se cadastrar</p>
+            <form id="registerForm" method="post" action="{% url 'usuarios:cadastro_cliente' loja=loja.nome %}">
+                {% csrf_token %}
+                
+                <a href="{% url 'usuarios:cadastro_cliente' loja=loja.nome %}" class="submit-btn">
+                    <span>Cadastrar</span>
+                </a>
             </form>
+            <div class="info-box">
+                <strong>Compra 100% Segura</strong>
+                Fique tranquilo, sua compra está protegida!<br>
+                Este site possui certificado SSL
+            </div>
         </div>
     </div>
 </main>
+
+<!-- Script para Mostrar/Ocultar Senha -->
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+
 {% endblock %}

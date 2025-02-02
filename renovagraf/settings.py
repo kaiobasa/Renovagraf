@@ -148,7 +148,7 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'desenvolvimento@renovagraf.com.br'  # Substitua pelo seu e-mail
 EMAIL_HOST_PASSWORD = 'Amapa244'  # Substitua pela sua senha ou senha de app do Gmail
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'Renovagraf <desenvolvimento@renovagraf.com.br>'
 
 
 AUTH_USER_MODEL = 'usuarios.Usuario'

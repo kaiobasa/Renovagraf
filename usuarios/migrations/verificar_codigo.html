@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verificação de Código</title>
+</head>
+<body>
+    <h1>Verifique seu E-mail</h1>
+    <p>Um código de verificação foi enviado para {{ usuario.email }}.</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="codigo_verificacao">Código de Verificação:</label>
+        <input type="text" id="codigo_verificacao" name="codigo_verificacao" required>
+        <button type="submit">Verificar</button>
+    </form>
+    {% if erro %}
+        <p style="color: red;">{{ erro }}</p>
+    {% endif %}
+</body>
+</html>
