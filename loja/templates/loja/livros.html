@@ -267,13 +267,13 @@
          <h2>Resumo do Orçamento</h2>
          <div id="resumoOrcamento"></div>
 
-        </div>
-        <div class="price-box">
-          <div class="price-box-title">Valor desse pedido:</div>
-          <div class="total-price">R$ 199,00</div>
-          <div class="unit-price">
-            Valor de cada unidade: <span>R$ 0,19</span>
-          </div>
+         <div class="price-box">
+            <div class="price-box-title">Valor desse pedido:</div>
+            <div class="total-price">R$ 199,00</div>
+            <div class="unit-price">
+                Valor de cada unidade: <span>R$ 0,19</span>
+            </div>
+            <div class="summary-section"></div>
         </div>      
          
          <!-- Seção de cálculo do frete -->
@@ -328,4 +328,11 @@
   <!-- Referenciando o JS específico para o produto -->
 
   <script src="{% static 'js/livros.js' %}"></script>
+  <script src="{% static 'js/utils.js' %}" type="module"></script>
+  <script src="{% static 'js/calculator.js' %}" type="module"></script>
+  <script src="{% static 'js/shipping.js' %}" type="module"></script>
+  <script src="{% static 'js/fileUpload.js' %}" type="module"></script>
+  <script src="{% static 'js/product.js' %}" type="module"></script>
+  <script src="{% static 'js/main.js' %}" type="module"></script>
+
 {% endblock %}

@@ -1036,19 +1036,17 @@ function updateSummary(
     const email = document.getElementById('email')?.value || '';
     const telefone = document.getElementById('telefone')?.value || '';
     const tipoProva = document.getElementById('tipoProva')?.value || '';
-
+    const observacao = document.getElementById('observacao')?.value || ''; // Captura a observação
     // Formato (dinâmico: pode ser calculado ou capturado de um campo)
     const largura = document.getElementById('largura-input')?.value || 140; // Largura padrão
     const altura = document.getElementById('altura-input')?.value || 210;  // Altura padrão
     const formato = `${largura}x${altura}`;
-
     // Aplicar desconto de 5% caso seja editora
     let descontoEditora = 0;
     if (tipoCliente === 'Editora') {
         descontoEditora = totalPrecoFinal * 0.05; // 5% de desconto
         totalPrecoFinal *= 0.95; // Atualizar o total com desconto
     }
-
     // Detalhes do cliente
     let clienteInfo = `
         <div class="summary-item"><strong>Tipo de Cliente:</strong> <span>${tipoCliente}</span></div>
@@ -1059,7 +1057,7 @@ function updateSummary(
             <div class="summary-item"><strong>Nome da Editora:</strong> <span>${nomeEditora}</span></div>
         `;
     }
-
+    
     // Miolo: Detalhes dinâmicos
     let mioloHtml = mioloDetails.map((miolo, index) => `
         <div class="summary-item"><strong>Miolo ${index + 1}:</strong></div>
@@ -1084,46 +1082,41 @@ function updateSummary(
                 ? finish.cost * tiragem
                 : finish.cost * Math.ceil(tiragem / 1000);
             specialFinishesHtml += `
-                <div class="summary-item"><strong>${finish.name}:</strong> <span>Sim (Custo: R$ ${cost.toFixed(2)})</span></div>
+                ${finish.name}: Sim (Custo: R$ ${cost.toFixed(2)})
             `;
         }
     });
 
+    // Atualizar a div price-box
     function atualizarPrecoPriceBox(precoTotalPorExemplar, tipoProva, descontoEditora, totalPrecoFinal) {
-    // Atualizando o preço unitário na price-box
-    document.querySelector('.unit-price span').textContent = `R$ ${precoTotalPorExemplar.toFixed(2)}`;
-
-    // Atualizando o preço total
-    document.querySelector('.total-price').textContent = `R$ ${totalPrecoFinal.toFixed(2)}`;
-
-    // Montando o conteúdo da div .summary-section
-    let summaryHtml = `
-        <div class="summary-item"><strong>Preço Unitário:</strong> <span>R$ ${precoTotalPorExemplar.toFixed(2)}</span></div>
-    `;
-
-    // Se for prova física, adicionar o valor
-    if (tipoProva === "Fisica") {
+        // Atualizando o preço unitário na price-box
+        document.querySelector('.unit-price span').textContent = `R$ ${precoTotalPorExemplar.toFixed(2)}`;
+        // Atualizando o preço total
+        document.querySelector('.total-price').textContent = `R$ ${totalPrecoFinal.toFixed(2)}`;
+        // Montando o conteúdo da div .summary-section
+        let summaryHtml = `
+            Preço Unitário: R$ ${precoTotalPorExemplar.toFixed(2)}
+        `;
+        // Se for prova física, adicionar o valor
+        if (tipoProva === "Fisica") {
+            summaryHtml += `
+                Prova Física: R$ 250,00
+            `;
+        }
+        // Se houver desconto, adicionar o valor do desconto
+        if (descontoEditora > 0) {
+            summaryHtml += `
+                Desconto Editora (5%): -R$ ${descontoEditora.toFixed(2)}
+            `;
+        }
+        // Adicionando o preço total
         summaryHtml += `
-            <div class="summary-item"><strong>Prova Física:</strong> <span>R$ 250,00</span></div>
+            Preço Total: R$ ${totalPrecoFinal.toFixed(2)}
         `;
     }
 
-    // Se houver desconto, adicionar o valor do desconto
-    if (descontoEditora > 0) {
-        summaryHtml += `
-            <div class="summary-item"><strong>Desconto Editora (5%):</strong> <span>-R$ ${descontoEditora.toFixed(2)}</span></div>
-        `;
-    }
-
-    // Adicionando o preço total
-    summaryHtml += `
-        <div class="summary-item"><strong>Preço Total:</strong> <span>R$ ${totalPrecoFinal.toFixed(2)}</span></div>
-    `;
-
-    // Atualizando a div .summary-section com o conteúdo montado
-    document.querySelector('.price-box .summary-section').innerHTML = summaryHtml;
-}
-
+    // Chamar função para atualizar a price-box
+    atualizarPrecoPriceBox(precoTotalPorExemplar, tipoProva, descontoEditora, totalPrecoFinal);
 
     // Gerar resumo dinâmico
     document.getElementById('resumoOrcamento').innerHTML = `
@@ -1147,6 +1140,7 @@ function updateSummary(
             <div class="summary-item"><strong>Título:</strong> <span>${document.getElementById('titulo')?.value || ''}</span></div>
             <div class="summary-item"><strong>ISBN:</strong> <span>${document.getElementById('isbn')?.value || ''}</span></div>
             <div class="summary-item"><strong>Tipo de Prova:</strong> <span>${tipoProva}</span></div>
+            
         </div>
         <div class="summary-section">
             <h3>Especificações da Capa</h3>
@@ -1169,17 +1163,32 @@ function updateSummary(
             ${mioloHtml}
             <div class="summary-item"><strong>Total de Páginas:</strong> <span>${totalPaginas}</span></div>
         </div>
+
         <div class="summary-section">
-            <h3>Preços</h3>
-            <div class="summary-item"><strong>Preço Unitário:</strong> <span>R$ ${precoTotalPorExemplar.toFixed(2)}</span></div>
+            <h3>Observações</h3>
+
+        <div class="summary-item"> <span>${observacao || 'Nenhuma observação fornecida'}</span></div>
+        </div>
+        <div class="summary-section">
+            <h3>Outros Custos</h3>
             ${tipoProva === "Fisica" ? `<div class="summary-item"><strong>Prova Física:</strong> <span>R$ 250,00</span></div>` : ''}
+        </div>
+        <div class="summary-section">
+            <h3>Descontos</h3>
             ${descontoEditora > 0 
                 ? `<div class="summary-item"><strong>Desconto Editora (5%):</strong> <span>-R$ ${descontoEditora.toFixed(2)}</span></div>` 
                 : ''}
-            <div class="summary-item"><strong>Preço Total:</strong> <span>R$ ${totalPrecoFinal.toFixed(2)}</span></div>
         </div>
+        <div class="summary-section">
+
+        
     `;
 }
+    
+
+
+    
+
 
 
 // Script Flyer 

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Área do Cliente - {{ loja.nome }}</h1>
+
+    <!-- Dados da Conta -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Dados da Conta</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome:</strong> {{ dados_usuario.nome }}</p>
+            <p><strong>E-mail:</strong> {{ dados_usuario.email }}</p>
+            <p><strong>Telefone:</strong> {{ dados_usuario.telefone }}</p>
+            <p><strong>Endereço:</strong> {{ dados_usuario.endereco }}</p>
+            <a href="{% url 'home_loja' loja=loja.nome|lower %}" class="btn btn-primary">Voltar para a Página Inicial</a>
+        </div>
+    </div>
+
+    <!-- Pedidos -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Meus Pedidos</h2>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for pedido in pedidos %}
+                    <li>
+                        Pedido #{{ pedido.id }} - {{ pedido.status }}
+                        <a href="#" class="btn btn-sm btn-info">Detalhes</a>
+                    </li>
+                {% empty %}
+                    <li>Nenhum pedido encontrado.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Orçamentos -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Meus Orçamentos</h2>
+        </div>
+        <div class="card-body">
+            <ul>
+                {% for orcamento in orcamentos %}
+                    <li>
+                        Orçamento #{{ orcamento.id }} - {{ orcamento.status }}
+                        <a href="#" class="btn btn-sm btn-info">Detalhes</a>
+                    </li>
+                {% empty %}
+                    <li>Nenhum orçamento encontrado.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pagamentos e Saldo -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Pagamentos e Saldo</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Saldo Disponível:</strong> R$ {{ saldo }}</p>
+            <a href="#" class="btn btn-success">Recarregar Saldo</a>
+            <ul class="mt-3">
+                {% for pagamento in pagamentos %}
+                    <li>
+                        Pagamento #{{ pagamento.id }} - R$ {{ pagamento.valor }} ({{ pagamento.status }})
+                    </li>
+                {% empty %}
+                    <li>Nenhum pagamento encontrado.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Botão de Logout -->
+<div class="text-center">
+    <form action="{% url 'usuarios:logout' loja=loja.nome|lower %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sair da Conta</button>
+    </form>
+</div>
+{% endblock %}
